@@ -44,11 +44,44 @@ def insertar_productos_prueba():
             stock_disponible=4,
             activo=True
         )
+        
+        producto4 = Arreglo(
+            nombre="Bouquet eterno personalizado",
+            descripcion="Arreglo con base redonda o corazón, hecho a mano con rosas de listón satinado y una estructura abierta diseñada para integrar globos, dulces y detalles a gusto del cliente.",
+            precio=10.00,
+            imagen_url="/static/imagenes/bouquet_eterno.jpg",
+            colores_disponibles=["Rosado", "Azul rey", "Morado", "Amarillo"], 
+            stock_disponible=4,
+            activo=True
+        )
+        
+        producto5 = Arreglo(
+            nombre="Ramo fotográfico",
+            descripcion="Ramo de rosas satinadas, que integra soportes visuales discretos entre las flores para exhibir tus fotografías y recuerdos más preciados.",
+            precio=10.00,
+            imagen_url="/static/imagenes/ramo_fotografico.jpg",
+            colores_disponibles=["Rosado", "Azul rey", "Morado", "Amarillo"], 
+            stock_disponible=3,
+            activo=True
+        )
+
+        producto6 = Arreglo(
+            nombre="Bouquet de globos personalizado",
+            descripcion="Ramo de rosas satinadas, que integra soportes visuales discretos entre las flores para exhibir tus fotografías y recuerdos más preciados.",
+            precio=10.00,
+            imagen_url="/static/imagenes/bouquet_globos.jpg",
+            colores_disponibles=["Rosado","Morado", "Fucsia"], 
+            stock_disponible=4,
+            activo=True
+        )
 
         # Guardar en la base de datos
         session.add(producto1)
         session.add(producto2)
         session.add(producto3)
+        session.add(producto4)
+        session.add(producto5)
+        session.add(producto6)
         session.commit()
         print("¡Catálogo de prueba creado exitosamente! 🌹")
 

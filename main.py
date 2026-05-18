@@ -2,9 +2,9 @@ from fastapi import FastAPI, Request, Form, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from sqlmodel import Session, select  # <-- Nuevos para consultas
+from sqlmodel import Session, select 
 from database import crear_base_de_datos, get_session
-from models import Arreglo  # <-- Tu modelo de tabla
+from models import Arreglo  
 
 app = FastAPI()
 
@@ -16,7 +16,7 @@ templates = Jinja2Templates(directory="templates")
 # Evento que se ejecuta al iniciar el servidor uvicorn
 @app.on_event("startup")
 def on_startup():
-    crear_base_de_datos()  # <-- Esto creará el archivo 'database.db' con tus tablas
+    crear_base_de_datos()  # crea el archivo .db con las tablas
 
 # Una función simulada para probar el flujo de la IA
 def simular_ia(descripcion: str) -> str:
