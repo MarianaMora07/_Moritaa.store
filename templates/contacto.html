@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="min-h-[80vh] flex items-center justify-center px-4 py-16 relative overflow-hidden">
+    
+    <!-- Botón Volver (Esquina Superior Izquierda con respecto a la pantalla/sección) -->
+    <div class="absolute top-6 left-6 z-10 ml-4">
+        <a href="/" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-950/40 border border-purple-500/20 text-purple-200 text-sm font-medium backdrop-blur-md hover:bg-purple-900/40 hover:border-purple-400/40 hover:text-purple-100 transition duration-300 shadow-lg">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Volver al inicio</span>
+        </a>
+    </div>
+
+    <!-- Contenedor principal animado con la clase de escala estética -->
+    <div class="max-w-md w-full glass-card rounded-[2rem] p-8 md:p-10 shadow-2xl text-center relative border border-purple-500/20 anim-scale mt-8 md:mt-0">
+        
+        <!-- Efecto de resplandor trasero sutil -->
+        <div class="absolute -top-10 -left-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-fuchsia-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Encabezado de la Tarjeta / Logotipo -->
+        <div class="relative flex justify-center mb-6">
+            <div class="relative group">
+                <!-- Anillo de luz palpitante decorativo alrededor del logo -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-purple-500 to-fuchsia-500 rounded-full blur-md opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                <img 
+                    src="/static/imagenes/logo.png" 
+                    alt="Logo _moritaa.store" 
+                    class="relative w-32 h-32 object-contain rounded-full border-2 border-purple-300/30 p-1 bg-[#1a0533]"
+                />
+            </div>
+        </div>
+
+        <!-- Información de la Marca -->
+        <h2 class="font-display text-3xl font-bold text-purple-100 tracking-wide mb-2">_moritaa.store</h2>
+        <p class="text-xs uppercase tracking-widest text-fuchsia-400 font-semibold mb-4">Arreglos Eternos & Detalles Mágicos</p>
+        
+        <p class="text-purple-200/80 text-sm leading-relaxed mb-8 px-2">
+            Transformamos cintas de raso y materiales selectos en rosas eternas y ramos personalizados hechos 100% a mano. Diseñamos recuerdos inolvidables que no se marchitan, perfectos para celebrar el amor, la gratitud y los momentos más especiales de tu vida.
+        </p>
+
+        <hr class="border-purple-500/10 mb-6" />
+
+        <!-- Sección del Personal de Órdenes -->
+        <div class="mb-8">
+            <span class="text-xs font-semibold uppercase tracking-wider text-purple-400/80 block mb-3">Atención Personalizada</span>
+            <div class="inline-flex items-center gap-3 bg-purple-950/40 border border-purple-500/20 rounded-2xl px-5 py-3 shadow-inner">
+                <div class="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                <div class="text-left">
+                    <p class="text-xs text-purple-300/60 font-medium">Personal de Atención</p>
+                    <p class="text-sm font-bold text-purple-200">Mariana Mora</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de Acción Principal (WhatsApp) -->
+        <div class="mb-8">
+            <a href="https://wa.me/04120795816" target="_blank" rel="noopener noreferrer" class="cta-btn block w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-purple-100 font-semibold py-3.5 px-6 rounded-2xl shadow-lg shadow-purple-900/40 text-sm tracking-wide">
+                Pedir Presupuesto por WhatsApp
+            </a>
+        </div>
+
+        <!-- Enlaces a Redes Sociales -->
+        <div>
+            <span class="text-xs font-semibold uppercase tracking-wider text-purple-400/80 block mb-4">Síguenos en nuestras redes</span>
+            <div class="flex justify-center gap-6">
+                <!-- Instagram -->
+                <a href="https://instagram.com/_moritaa.store" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 group text-purple-400 hover:text-purple-200 transition duration-300">
+                    <div class="w-11 h-11 rounded-xl bg-purple-950/60 flex items-center justify-center border border-purple-500/20 group-hover:border-purple-400/40 group-hover:bg-purple-900/40 transition">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-medium tracking-wide">Instagram</span>
+                </a>
+
+                <!-- TikTok -->
+                <a href="https://tiktok.com/@_moritaa.store" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 group text-purple-400 hover:text-purple-200 transition duration-300">
+                    <div class="w-11 h-11 rounded-xl bg-purple-950/60 flex items-center justify-center border border-purple-500/20 group-hover:border-purple-400/40 group-hover:bg-purple-900/40 transition">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.19 1.13 1.2 2.69 1.93 4.31 2.01v3.58c-1.5-.12-2.97-.69-4.14-1.63-.29-.23-.55-.49-.79-.76v6.92c-.01 3.5-2.22 6.71-5.55 7.82-3.41 1.19-7.27-.13-9.15-3.26-2-3.23-1.15-7.62 1.94-9.82 2.14-1.57 5.06-1.74 7.37-.45v3.66c-1.39-.77-3.18-.54-4.32.55-1.25 1.13-1.46 3.1-.48 4.46.94 1.37 2.8 1.9 4.31 1.23 1.51-.62 2.47-2.18 2.47-3.82V0h-.01z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] font-medium tracking-wide">TikTok</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

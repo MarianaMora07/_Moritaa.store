@@ -23,6 +23,13 @@ def simular_ia(descripcion: str) -> str:
     # Aquí irá la conexión real con el modelo más adelante
     return f"Basado en tu petición ('{descripcion}'), te sugiero una cúpula de vidrio mediana con una rosa eterna principal color rojo carmín, detalles de flores preservadas blancas alrededor y luces LED cálidas para darle un toque mágico."
 
+@app.get("/contacto", response_class=HTMLResponse)
+async def leer_contacto(request: Request):
+    return templates.TemplateResponse(
+        name="contacto.html",
+        request=request 
+    )
+    
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request, db: Session = Depends(get_session)):
     # Buscamos todos los arreglos que estén marcados como activos
