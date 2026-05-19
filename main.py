@@ -13,6 +13,23 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # Configuramos la carpeta de las plantillas HTML
 templates = Jinja2Templates(directory="templates")
 
+@app.get("/producto/{producto_id}/detalles", response_class=HTMLResponse)
+async def obtener_detalles_producto(request: Request, producto_id: int):
+    # Tus variaciones simuladas
+    productos_relacionados = [
+        {"id": 101, "nombre": "Detalle de 1 Rosa Eterna", "precio": 5.00, "imagen_url": "/static/imagenes/logo.png"},
+        {"id": 102, "nombre": "Ramo de 3 Rosas Eternas", "precio": 12.00, "imagen_url": "/static/imagenes/logo.png"},
+        {"id": 103, "nombre": "Ramo de 7 Rosas Eternas", "precio": 25.00, "imagen_url": "/static/imagenes/logo.png"},
+        {"id": 104, "nombre": "Ramo Premium de 12 Rosas", "precio": 40.00, "imagen_url": "/static/imagenes/logo.png"},
+    ]
+    
+    # SOLUCIÓN: Usamos exactamente el mismo formato moderno que tienes en tu función home()
+    return templates.TemplateResponse(
+        request=request,
+        name="partials/detalles_producto.html", 
+        context={"relacionados": productos_relacionados}
+    )
+
 # Evento que se ejecuta al iniciar el servidor uvicorn
 @app.on_event("startup")
 def on_startup():

@@ -1,0 +1,155 @@
+<!-- Fondo oscuro del Modal -->
+<div class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in" id="modal-detalles">
+  
+  <!-- Tarjeta del Modal -->
+  <div class="glass-card w-full max-w-3xl rounded-3xl p-6 md:p-8 overflow-y-auto max-h-[90vh] relative shadow-2xl border border-purple-500/30 transform transition-all duration-200"
+       style="animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);">
+    
+    <!-- Botón Cerrar -->
+    <button 
+      onclick="cerrarModalConAnimacion()" 
+      class="absolute top-5 right-5 text-purple-300 hover:text-white bg-purple-950/40 p-2 rounded-full transition z-10"
+    >
+      ✕
+    </button>
+
+    <!-- Título Principal -->
+    <div class="mb-6">
+      <h3 class="font-display text-2xl font-bold text-purple-100">Opciones y Tamaños Disponibles</h3>
+      <p class="text-purple-300/70 text-sm">Explora otras presentaciones de este diseño para armar tu regalo perfecto.</p>
+    </div>
+
+    <!-- CONTENEDOR DEL CARRUSEL CON FLECHAS FLOTANTES -->
+    <div class="relative group px-1">
+      
+      <!-- Flecha Izquierda -->
+      <!-- Modificado: Llama a la función nativa pasando 'izquierda' -->
+      <button 
+        onclick="scrollCarrusel('izquierda')"
+        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 bg-purple-900/80 hover:bg-fuchsia-600 border border-purple-500/40 text-white p-3 rounded-full shadow-lg transition z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100"
+        aria-label="Anterior"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+
+      <!-- Flecha Derecha -->
+      <button 
+        onclick="scrollCarrusel('derecha')"
+        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 bg-purple-900/80 hover:bg-fuchsia-600 border border-purple-500/40 text-white p-3 rounded-full shadow-lg transition z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100"
+        aria-label="Siguiente"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+
+      <!-- CARRUSEL HORIZONTAL RESPONSIVO -->
+      <div 
+        id="carrusel-contenedor"
+        class="flex gap-5 overflow-x-auto pb-4 pt-2 px-2 snap-x snap-mandatory sin-scrollbar"
+      >
+        {% for rel in relacionados %}
+        <div class="min-w-[220px] md:min-w-[240px] max-w-[240px] snap-start glass-card rounded-2xl overflow-hidden flex flex-col justify-between border border-purple-500/10 hover:border-purple-500/40 transition duration-300">
+          
+          <!-- Imagen miniatura -->
+          <div class="h-40 bg-purple-950/40 overflow-hidden">
+            <img src="{{ rel.imagen_url }}" alt="{{ rel.nombre }}" class="w-full h-full object-cover">
+          </div>
+
+          <!-- Info Corta -->
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <h4 class="font-display font-semibold text-purple-200 text-sm mb-1 line-clamp-2">
+                {{ rel.nombre }}
+              </h4>
+            </div>
+            
+            <div class="flex items-center justify-between mt-3">
+              <span class="text-fuchsia-400 font-bold text-md">${{ "%.2f"|format(rel.precio) }}</span>
+              <button class="bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white text-xs font-bold px-3 py-2 rounded-lg opacity-90 hover:opacity-100 transition">
+                Elegir
+              </button>
+            </div>
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+
+    <!-- Botón inferior para cerrar -->
+    <div class="mt-6 flex justify-end">
+      <button 
+        onclick="cerrarModalConAnimacion()" 
+        class="border border-purple-400/30 text-purple-300 text-sm font-semibold px-5 py-2 rounded-xl hover:bg-purple-900/30 transition"
+      >
+        Volver al catálogo
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* Ocultar por completo la barra de scroll molesta */
+  .sin-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .sin-scrollbar {
+    -ms-overflow-style: none;  /* IE y Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  /* Animación para el fondo */
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Animación elástica para la tarjeta */
+  @keyframes modalPop {
+    0% { transform: scale(0.93); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+</style>
+
+<script>
+  function scrollCarrusel(direccion) {
+    const contenedor = document.getElementById('carrusel-contenedor');
+    if (contenedor) {
+      const primeraTarjeta = contenedor.firstElementChild;
+      if (primeraTarjeta) {
+        const anchoDesplazamiento = primeraTarjeta.offsetWidth + 20;
+        
+        contenedor.scrollBy({
+          left: direccion === 'derecha' ? anchoDesplazamiento : -anchoDesplazamiento,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  function cerrarModalConAnimacion() {
+    const modal = document.getElementById('modal-detalles');
+    if (modal) {
+      modal.style.transition = 'opacity 0.2s ease-in';
+      modal.style.opacity = '0';
+      
+      const tarjeta = modal.querySelector('.glass-card');
+      if (tarjeta) {
+        tarjeta.style.transition = 'transform 0.2s ease-in';
+        tarjeta.style.transform = 'scale(0.95)';
+      }
+      
+      setTimeout(() => {
+        modal.remove();
+      }, 200);
+    }
+  }
+</script>
