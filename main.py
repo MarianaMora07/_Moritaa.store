@@ -14,16 +14,26 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/producto/{producto_id}/detalles", response_class=HTMLResponse)
-async def obtener_detalles_producto(request: Request, producto_id: int):
-    # Tus variaciones simuladas
-    productos_relacionados = [
-        {"id": 101, "nombre": "Detalle de 1 Rosa Eterna", "precio": 5.00, "imagen_url": "/static/imagenes/logo.png"},
-        {"id": 102, "nombre": "Ramo de 3 Rosas Eternas", "precio": 12.00, "imagen_url": "/static/imagenes/logo.png"},
-        {"id": 103, "nombre": "Ramo de 7 Rosas Eternas", "precio": 25.00, "imagen_url": "/static/imagenes/logo.png"},
-        {"id": 104, "nombre": "Ramo Premium de 12 Rosas", "precio": 40.00, "imagen_url": "/static/imagenes/logo.png"},
-    ]
+async def obtener_detalles_producto(
+    request: Request, 
+    producto_id: int, 
+    db: Session = Depends(get_session)
+):
+    # 1. Buscamos el producto principal por su id en la base de datos
+    arreglo_principal = db.get(Arreglo, producto_id)
     
-    # SOLUCIÓN: Usamos exactamente el mismo formato moderno que tienes en tu función home()
+    # Control de seguridad por si el producto no existe o fue eliminado
+    if not arreglo_principal:
+        return HTMLResponse(
+            content="<p class='text-purple-300 p-4 text-center'>El producto solicitado no está disponible.</p>", 
+            status_code=404
+        )
+    
+    # 2. Extraemos las variaciones enlazadas a este producto específico
+    # Si el producto no tiene variaciones registradas, devolverá una lista vacía [] automáticamente
+    productos_relacionados = arreglo_principal.variaciones
+    
+    # 3. Renderizamos la misma plantilla inyectando los datos reales
     return templates.TemplateResponse(
         request=request,
         name="partials/detalles_producto.html", 

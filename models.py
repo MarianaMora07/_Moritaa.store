@@ -17,7 +17,6 @@ class Usuario(SQLModel, table=True):
     pedidos: List["SolicitudPedido"] = Relationship(back_populates="usuario")
 
 
-#TABLA DEL CATÁLOGO (DISEÑOS PREDETERMINADOS)
 class Arreglo(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     nombre: str
@@ -28,6 +27,27 @@ class Arreglo(SQLModel, table=True):
     stock_disponible: int
     activo: bool = Field(default=True)
 
+    # Relación para buscar fácil en Python las opciones de este arreglo
+    # Si eliminas un arreglo del catálogo, sus variaciones se limpian solas 
+    variaciones: List["VariacionArreglo"] = Relationship(
+        back_populates="producto_principal",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
+
+
+# NUEVA TABLA: VARIACIONES O TAMAÑOS COMPLEMENTARIOS
+class VariacionArreglo(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    nombre: str              
+    precio: float             
+    imagen_url: Optional[str] = None
+    activo: bool = Field(default=True)
+
+    # Clave foránea
+    arreglo_id: int = Field(foreign_key="arreglo.id")
+
+    # Relación inversa para saber a qué producto padre pertenece esta variación
+    producto_principal: Arreglo = Relationship(back_populates="variaciones")
 
 #TABLA DE HISTORIAL DE IA
 class ConsultaIA(SQLModel, table=True):
@@ -40,7 +60,6 @@ class ConsultaIA(SQLModel, table=True):
     # Relaciones
     usuario: Optional[Usuario] = Relationship(back_populates="consultas")
     pedido: Optional["SolicitudPedido"] = Relationship(back_populates="consulta_ia")
-
 
 #TABLA DE SOLICITUDES DE PEDIDOS
 class SolicitudPedido(SQLModel, table=True):
